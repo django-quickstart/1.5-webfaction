@@ -19,6 +19,8 @@ webfaction environment variables:  http://community.webfaction.com/questions/137
 
 Fabric file for running command line alias stuff
 
-Should we setup a local apache to get the same dev/prod parity we get via foreman?
+Should we setup a local apache to get the same dev/prod parity we get via foreman?  Autoenv vs foreman?
 
-Investigate using vagrant to fully automate machine setup.
+Investigate using vagrant to fully automate machine setup.djan
+
+is assets/assets the best place to store static sources?

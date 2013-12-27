@@ -15,6 +15,15 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+#Set this
+# https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+# Until 1.7 it is probably a good idea to set it like this
+# ALLOWED_HOSTS = [
+#    '.{{ project_name }}.com', # Allow domain and subdomains
+#    '.{{ project_name }}.com.', # Also allow FQDN and subdomains
+# ]
+ALLOWED_HOSTS = ["*"]
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = r"{{ secret_key }}"
 
@@ -76,12 +85,14 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',    
 )
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',    
 )
 
 MIDDLEWARE_CLASSES = (
@@ -136,6 +147,7 @@ FIXTURE_DIRS = (
 )
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 ########## APP CONFIGURATION
 INSTALLED_APPS = (
@@ -223,15 +235,6 @@ ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[{{ project_name }}]"
-
-#Set this
-# https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-# Until 1.7 it is probably a good idea to set it like this
-# ALLOWED_HOSTS = [
-#    '.{{ project_name }}.com', # Allow domain and subdomains
-#    '.{{ project_name }}.com.', # Also allow FQDN and subdomains
-# ]
-ALLOWED_HOSTS = ["*"]
 
 #######################################
 #ENVIRONMENTS
