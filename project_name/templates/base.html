@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load url from future %}
+  {% block head %}
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}A DJANGO PROJECT{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    {% block css %}
+      <!-- Le styles -->
+      <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet">
+      <style>
+        body {
+          padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+      </style>
+      <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery-ui-bootstrap-theme/jquery-ui-1.9.2.custom.css" media="all">
+      <!--[if lt IE 9]>
+        <link rel="stylesheet" type="text/css" href="css/custom-theme/jquery.ui.1.9.2.ie.css"/>
+      <![endif]-->    
+      <link href="{{ STATIC_URL }}css/base.css" rel="stylesheet">
+      {% block extra-css %}{% endblock extra-css %}
+    {% endblock css %}
+    
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}ico/apple-touch-icon-57-precomposed.png">
+
+
+    {% block extra-head %}{% endblock extra-head %}
+  </head>
+  {% endblock head %}
+  
+  
+  <body>
+    {% block navbar %}
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <a id="brand_logo" class="brand" href="/"><span class="logo1">A</span><span class="logo2">Django</span><span class="logo3">Site</span></a>
+          <div class="pull-right">
+              {% if user.is_authenticated %}
+                <div class="btn-group">
+                  <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    {{user}}
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu pull-right">
+                    <!--
+                    <li><a href="/accounts/profile/">My Profile</a></li>
+                    <li class="divider"></li>
+                  -->
+                    <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+                    <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
+                    <li class="divider"></li>
+                  <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+                  </ul>
+                </div>
+                
+
+              {% else %}
+                <a class="btn" type="button" href="{% url 'account_login' %}">Sign In</a>
+                <a class="btn" type="button" href="{% url 'account_signup' %}">Sign Up</a>
+              {% endif %}
+          </div>
+          {% comment %}
+          <!-- AddThis Button BEGIN -->
+          <div class="nav pull-right snm_addthis_nav addthis_toolbox addthis_default_style addthis_32x32_style">
+          <a class="addthis_button_compact snm_atb"></a>
+          <a class="addthis_button_preferred_3 snm_atb"></a>
+          <a class="addthis_button_preferred_2 snm_atb"></a>
+          <a class="addthis_button_preferred_1 snm_atb"></a>
+          </div>
+          <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=SET_ADDTHIS_KEY"></script>
+          <!-- AddThis Button END -->        
+          {% endcomment %}
+          </div>
+        </div>
+      </div>
+    {% endblock navbar %}
+    <div class="container">
+      {% block canvas %}
+      {% block content %}
+        
+      {% endblock content %}
+      {% endblock canvas %}
+    </div> <!-- /container -->
+    
+    {% block js %}
+      <!-- Le javascript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      {% if SERVE_MEDIA_LOCALLY %}
+        <script src="{{ STATIC_URL }}js/jquery-1.8.3.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery-ui-1.9.2.js"></script>
+      {% else %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+      {% endif %}    
+      
+      <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
+      {% block extra-js %}{% endblock extra-js %}
+    {% endblock js %}
+    
+    {% block analytics %}
+      <script type="text/javascript">
+        //Google Analytics
+        //UNCOMMENT
+        {% comment %}
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'SETME']);
+        _gaq.push(['_setDomainName', 'SETME']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        {% endcomment %}
+      </script>    
+    {% endblock analytics %}
+  </body>
+</html>

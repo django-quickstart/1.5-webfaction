@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>A new django project homepage</h1>
+  <p> Based off of <a href="https://github.com/tedtieken/django-project-skel">Django 1.4 project template for fast heroku deployment</a> by Ted Tieken.
+  </p>
+  <h3> As you get started a few things to remember to do </h3>
+  <p>In your Base.html</p>
+  <ul>
+    <li>Set Page Title base</li>
+    <li>Set top bar logo-text</li>
+    <li>Set addthis key, uncomment</li>
+    <li>Set google analytics variables, uncomment google analytics section</li>
+  </ul>
+  <p>In your file directory</p>
+  <ul>
+    <li>Add favicons to assets/assets/ico</li>
+    <li>Add your custom css in assets/assets/css/base.css</li>
+  </ul>
+  <p>If this page is displaying without formatting, remember to run<pre>foreman run python manage.py collectstatic</pre>
+  </p>
+{% endblock %}

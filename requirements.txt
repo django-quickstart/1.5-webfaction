@@ -1,0 +1,28 @@
+#Latest versions as of 12/11/2012
+#Core packages
+distribute
+django
+South
+gunicorn
+django-allauth
+dj-database-url
+django-storages
+django-s3-folder-storage
+psycopg2
+newrelic
+
+#Testing Packages
+selenium
+
+#Dev packages
+django-debug-toolbar
+#django-extensions
+
+#Enabling packages
+argparse
+boto
+httplib2
+oauth2
+python-openid
+wsgiref
+mock #For boto tests 
