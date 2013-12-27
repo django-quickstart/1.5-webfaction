@@ -1,0 +1,24 @@
+#TODOS
+
+* Compare to default 1.5 startproject
+
+* Upgrade to bootstrap 3.x
+
+* Instructions for setting up webfaction app
+* Instructions for setting up webfaction env variables
+* Instructions for setting up webfaction static
+* Setup to use sendgrid for email delivery
+
+webfaction cron
+
+webfaction environment variables:  http://community.webfaction.com/questions/13711/handling-environment-variables-with-multiple-django-instances
+
+!!* django-storages for static/media on s3
+!!* django-folder-storages to keep static/media in separate silos
+
+
+Fabric file for running command line alias stuff
+
+Should we setup a local apache to get the same dev/prod parity we get via foreman?
+
+Investigate using vagrant to fully automate machine setup.

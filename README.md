@@ -1,23 +1,23 @@
 1.5-webfaction
 ==============
 
-Opinionated django project skeleton with recipe/script for rapid deployment to webfaction. Django version:1.5. Server: Apache/Mod_WSGI. Assets: Webfaction nginx. Frontend: Bootstrap. DB: Webfaction Postgres. Secrets stored in environment variable.  Uses virtualenv.
+Opinionated django project skeleton with recipe/script for rapid deployment to webfaction. Django version:1.5. Server: Apache/Mod_WSGI. Assets: Webfaction nginx. Frontend: Bootstrap 2.x. DB: Webfaction Postgres. Secrets stored in environment variable.  Uses virtualenv.  Python version 2.x
 
 
 
-# Django 1.4 & 1.5 project template for fast Heroku deployment
+# Django 1.4 & 1.5 project template for fast Webfaction deployment
 <!-- Uncomment this in your real project (and delete )
 # {{ project_name|title }} Django Project
 
-From [Django 1.4 project template for fast heroku deployment](https://github.com/django-quickstart/1.5-webfaction)
+From [Django 1.4 project template for fast webfaction deployment](https://github.com/django-quickstart/1.5-webfaction)
  -->
 
 
 ## About
 
-This is a template for starting Django 1.4 projects and rapidly deploying to heroku.  It is opinionated and configured for the things that I like and repetitively end up adding before deployment.  It works with 1.5 but has not been thoroughly tested with 1.5.   
+This is a template for starting Django 1.4 projects and rapidly deploying to webfaction.  It is opinionated and configured for the things that I like and repetitively end up adding before deployment.  It works with 1.5 but has not been thoroughly tested with 1.5.   
 
-This is a first version, while it has been tested and used it is not promised to be complete or bug free.
+While this quickstart is what I use personally, it is not promised to be complete or bug free.
 
 
 ## Skel Template Features ##
@@ -45,21 +45,23 @@ This is a first version, while it has been tested and used it is not promised to
 * Modified 3rd party apps placed in `applib/` directory, applib/ added to path
 * Apps specific to project to be created in `project_name/[app_name]` directory
 
-#####Ready for Heroku Deployment
-* Includes Procfile, using gunicorn
-* Includes storages, s3_folder_storage (allows separate directories for media and static)
+#####Ready for Webfaction Deployment
+* Instructions for setting up webfaction app
+* Instructions for setting up webfaction env variables
+* Instructions for setting up webfaction static
 * Setup to use sendgrid for email delivery
+* Uses AutoEnv to keep .env parity without needing heroku toolbelt
 
 #####Common apps already installed with reasonable default configuration
 * Django admin activated by default.
 * allauth
 * south
-* django-storages for static/media on s3
-* django-folder-storages to keep static/media in separate silos
+!!* django-storages for static/media on s3
+!!* django-folder-storages to keep static/media in separate silos
 
 ####Other Goodies
 * Simple 404 and 500 error templates.
-* TODO: bootstrap driven base.html
+* Bootstrap 2.x driven base.html
 * Automatically builds a README with installation notes.
 
 ####Template
@@ -78,34 +80,26 @@ This is a first version, while it has been tested and used it is not promised to
 
 ## Prerequisites ##
 
-- Heroku account, AWS account 
-- python2 >= 2.7, pip, virtualenv, git
+- [Webfaction account](http://www.webfaction.com/services/hosting?affiliate=blooksllc) 
+- python2 >= 2.7, pip, virtualenv, git, autoenv
 
 
 ### First time system config/installation stuff.
 
 ``` bash
 easy_install pip
-pip install virtualenv, virtualenvwrapper
+pip install virtualenv, virtualenvwrapper, autoenv
 brew install postgresql
-wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-heroku login
 ```
 
 ###Creating utility aliases
-To achieve dev/prod parity, we end up creating some very annoyingly verbose commands like ```foreman run python manage.py [command]``` 
-
 Adding the following to your ```~/.bash_aliases``` file can save a lot of repetitive and verbose keystrokes.  
 ``` bash
 alias drpm ='python manage.py'
-alias frpm='foreman run python manage.py'
-alias herokurpm='heroku run python manage.py'
-alias frpmr='foreman run python manage.py runserver 0.0.0.0:5000'
 alias drpmr = 'python manage.py runserver 0.0.0.0:5000'
 alias [project-name] = 'cd /[path]/[to]/[projectname]/ && source ~/ve/[project-name]/bin/activate'
 ```
-
-I intentionally keep django as 'd', foreman as 'f', and heroku as 'heroku' to make sure running commands locally is easy and remotely is hard.  It's very easy to type 'hrpm' when you mean 'frpm.'  Requiring the extra layer of thought can stop you from accidentally deleting your production database.
+These are based on the shortcuts I use when working with heroku: I intentionally keep django as 'd', foreman as 'f', and heroku as 'heroku' to make sure running commands locally is easy and remotely is hard.  It's very easy to type 'hrpm' when you mean 'frpm.'  Requiring the extra layer of thought can stop you from accidentally deleting your production database.
 
 To add or edit aliases
 ``` bash
@@ -119,15 +113,8 @@ nano ~/.bash_aliases
 There is some wait time while pip installs requirements and while running the first set of tests, these steps can be delayed until waiting for tasks to complete.
 
 * Gather domain credentials
-* Collect AWS Credentials
-    1. AWS Management Console > IAM > Users > Create new user > [project_name]
-    2. Record credentials
-    3. Bottom Pane, Permissions Tab > Attach User Policy > S3 Full access
-    NB: This is a convenience shortcut, for production access should be limited to specific buckets.
-* Create s3 bucket
-    1. AWS Management Console > S3 
-    2. Create Bucket [project_name]-logging
-    3. Create Bucket [project_name]-assets-production, logging to ibid, prefix s3
+* Setup a django app in webfaction
+* Setup a postgres db in webfaction
 
 
 
