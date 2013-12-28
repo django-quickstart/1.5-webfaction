@@ -99,6 +99,11 @@ alias drpm ='python manage.py'
 alias drpmr = 'python manage.py runserver 0.0.0.0:5000'
 alias [project-name] = 'cd /[path]/[to]/[projectname]/ && source ~/ve/[project-name]/bin/activate'
 ```
+Reload without restarting your terminal with
+``` bash
+source ~/.bash_aliases
+```
+
 These are based on the shortcuts I use when working with heroku: I intentionally keep django as 'd', foreman as 'f', and heroku as 'heroku' to make sure running commands locally is easy and remotely is hard.  It's very easy to type 'hrpm' when you mean 'frpm.'  Requiring the extra layer of thought can stop you from accidentally deleting your production database.
 
 To add or edit aliases
@@ -137,6 +142,12 @@ django-admin.py startproject --template https://github.com/django-quickstart/1.5
 cd [project-name]
 touch virtenv_is_[project-name]
 ```
+
+Remove the cruft 
+``` bash
+rm TODOS.txt LICENSE requirements.old.txt
+``` bash
+
 
 Install base requirements.
 ``` bash

@@ -3,6 +3,7 @@
 * Instructions for setting up webfaction app
 * Instructions for setting up webfaction env variables
 * Instructions for setting up webfaction static
+* Instructions for setting up webfaction virtualenv
 * Instructions for setup to use sendgrid for email delivery
 * Instructions for webfaction cron
 
@@ -29,6 +30,8 @@ Assets/assets vs assets/static-source???
 #Pan-quickstart todos:
 * Should jquery be moved to the vendor folder?
 * Add instructions for moving to production
+* Should we delete the applib?
 
+#Syncing todos:
 * Mirror template and asset changes to heroku quickstart
 * Mirror applicable readme changes to heroku quickstart

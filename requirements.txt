@@ -1,7 +1,7 @@
 #Latest versions as of 12/11/2012
 #Core packages
 distribute
-django "django>=1.5,<1.6"
+django >=1.5,<1.6
 South
 django-allauth
 dj-database-url
@@ -12,4 +12,4 @@ selenium
 
 #Dev packages
 django-debug-toolbar
-#django-extensions
+#django-extensionsp
