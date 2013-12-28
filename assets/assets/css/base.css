@@ -1,5 +1,9 @@
 /* A base file for your site specific CSS */
 
+.navbar-static-top {
+  margin-bottom: 19px;
+}
+
 span.logo1 {
   color: #08C;
 }
@@ -11,3 +15,4 @@ span.logo2 {
 span.logo3 {
   color: #BB6900;
 }
+

@@ -171,9 +171,6 @@ INSTALLED_APPS = (
     ##### THIRD_PARTY_APPS #####
     # System/pip installed 3rd party apps
     'south',
-    'gunicorn',
-    'storages',
-    's3_folder_storage',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -183,8 +180,7 @@ INSTALLED_APPS = (
     
     ##### APPLIB_APPS #####
     # 3rd party apps that have been modified and placed in /applib
-    # /applib is added to path
-    
+    # /applib is added to path    
     #'moded_third_party_app',
 
 
@@ -282,21 +278,8 @@ if DJANGO_ENV == "PRODUCTION":
   EMAIL_PORT = 587
   EMAIL_USE_TLS = True
 
-  #AWS KEYS
-  AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-  AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-  AWS_STORAGE_BUCKET_NAME = '{{project_name}}-assets-production'
-
-  #ASSETS: STATIC FILES, MEDIA
-  DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
-  STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
-  DEFAULT_S3_PATH = "media"
-  STATIC_S3_PATH = "static"
-
-  MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
-  STATIC_ROOT = "/%s/" % STATIC_S3_PATH
-  MEDIA_URL = 'http://%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
-  STATIC_URL = 'http://%s.s3.amazonaws.com/static/' % AWS_STORAGE_BUCKET_NAME
+  MEDIA_URL = '/media/'
+  STATIC_URL = '/static/'  
   ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
   
   #CACHES

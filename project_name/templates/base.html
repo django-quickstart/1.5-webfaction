@@ -1,44 +1,37 @@
-<!DOCTYPE html>
+{% verbatim %}<!DOCTYPE html>
 <html lang="en">
-{% load url from future %}
   {% block head %}
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}A DJANGO PROJECT{% endblock title %}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.png">
     
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <title>{% block title %}{% endverbatim %}{% spaceless %}
+  
+{{project_name}}
+
+{% endspaceless %}{% verbatim %}{% endblock title %}</title>    
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
     
     {% block css %}
-      <!-- Le styles -->
-      <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet">
-      <style>
-        body {
-          padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-        }
-      </style>
-      <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery-ui-bootstrap-theme/jquery-ui-1.9.2.custom.css" media="all">
-      <!--[if lt IE 9]>
-        <link rel="stylesheet" type="text/css" href="css/custom-theme/jquery.ui.1.9.2.ie.css"/>
-      <![endif]-->    
+      <!-- Bootstrap core CSS -->
+      <link href="{{ STATIC_URL }}vendor/bootstrap/
+css/bootstrap.css" rel="stylesheet">
       <link href="{{ STATIC_URL }}css/base.css" rel="stylesheet">
       {% block extra-css %}{% endblock extra-css %}
     {% endblock css %}
     
-
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}ico/apple-touch-icon-57-precomposed.png">
-
+    {% comment %}
+      JS is at bottom to improve page load speed, any urgent js should go in extra-head 
+    {% endcomment %}
 
     {% block extra-head %}{% endblock extra-head %}
   </head>
@@ -47,48 +40,58 @@
   
   <body>
     {% block navbar %}
-      <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-          <div class="container">
-            <a id="brand_logo" class="brand" href="/"><span class="logo1">A</span><span class="logo2">Django</span><span class="logo3">Site</span></a>
-          <div class="pull-right">
+      <div class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+              {% endverbatim %}{% spaceless %}
+
+{{ project_name }}
+              
+{% endspaceless %}{% verbatim %}
+              <span class="logo1">A</span><span class="logo2">Django</span><span class="logo3">Site</span>
+            </a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="/">About</a></li>
+              <li><a href="/">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
               {% if user.is_authenticated %}
-                <div class="btn-group">
-                  <button class="btn dropdown-toggle" data-toggle="dropdown">
-                    {{user}}
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu pull-right">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    {{user}} 
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
                     <!--
                     <li><a href="/accounts/profile/">My Profile</a></li>
                     <li class="divider"></li>
-                  -->
+                    -->
                     <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
                     <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
                     <li class="divider"></li>
-                  <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+                    <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
                   </ul>
-                </div>
-                
-
+                </li>              
               {% else %}
-                <a class="btn" type="button" href="{% url 'account_login' %}">Sign In</a>
-                <a class="btn" type="button" href="{% url 'account_signup' %}">Sign Up</a>
+                <li>
+                  <a href="{% url 'account_login' %}">Sign In</a>
+                </li>
+                <li>
+                  <a href="{% url 'account_signup' %}">Create New Account</a>
+                </li>
               {% endif %}
-          </div>
-          {% comment %}
-          <!-- AddThis Button BEGIN -->
-          <div class="nav pull-right snm_addthis_nav addthis_toolbox addthis_default_style addthis_32x32_style">
-          <a class="addthis_button_compact snm_atb"></a>
-          <a class="addthis_button_preferred_3 snm_atb"></a>
-          <a class="addthis_button_preferred_2 snm_atb"></a>
-          <a class="addthis_button_preferred_1 snm_atb"></a>
-          </div>
-          <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=SET_ADDTHIS_KEY"></script>
-          <!-- AddThis Button END -->        
-          {% endcomment %}
-          </div>
-        </div>
+            </ul>
+          </div><!--/.nav-collapse -->        
       </div>
     {% endblock navbar %}
     <div class="container">
@@ -100,38 +103,35 @@
     </div> <!-- /container -->
     
     {% block js %}
-      <!-- Le javascript
+      <!-- Javascript
       ================================================== -->
       <!-- Placed at the end of the document so the pages load faster -->
       {% if SERVE_MEDIA_LOCALLY %}
-        <script src="{{ STATIC_URL }}js/jquery-1.8.3.js"></script>
-        <script src="{{ STATIC_URL }}js/jquery-ui-1.9.2.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
       {% else %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       {% endif %}    
       
-      <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
+      <script src="{{ STATIC_URL }}vendor/bootstrap/
+js/bootstrap.js"></script>
       {% block extra-js %}{% endblock extra-js %}
     {% endblock js %}
     
     {% block analytics %}
       <script type="text/javascript">
-        //Google Analytics
-        //UNCOMMENT
+        //Google Universal Analytics
+        //UNCOMMENT AND SET VARIABLES
         {% comment %}
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'SETME']);
-        _gaq.push(['_setDomainName', 'SETME']);
-        _gaq.push(['_trackPageview']);
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
+          ga('create', 'SET_ACCOUNT_ID', 'SET_DOMAIN_NAME');
+          ga('send', 'pageview');
         {% endcomment %}
       </script>    
     {% endblock analytics %}
   </body>
 </html>
+{% endverbatim %}

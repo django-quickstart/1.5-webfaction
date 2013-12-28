@@ -66,10 +66,10 @@ While this quickstart is what I use personally, it is not promised to be complet
 
 ####Template
 * Twitter Bootstrap based template included
-* JQuery & Twitter Bootstrap themed JQUI included
+* JQuery included
 * AllAuth login signup manage links already in header
 * JS in footer for faster page loading
-* Google analytics and Addthis code in base.html, commented out
+* Google universal analytics code in base.html, commented out
 
 ###Template blocks cascade
 * js > extra-js, css > extra-css, head > extra-head
@@ -133,7 +133,7 @@ pip install "django>=1.5,<1.6"
 
 Start a project.
 ``` bash
-django-admin.py startproject --template https://github.com/django-quickstart/1.5-webfaction/zipball/master --extension py,md,gitignore,dist [project-name]
+django-admin.py startproject --template https://github.com/django-quickstart/1.5-webfaction/zipball/master --extension py,md,gitignore,dist,html [project-name]
 cd [project-name]
 touch virtenv_is_[project-name]
 ```
@@ -557,7 +557,6 @@ Bootstrap resources
 
 In Base.html remember to
 - Set Page Title base
-- Set addthis key
 - Set google analytics variables, uncomment google analytics section
 
 In file directory
