@@ -1,15 +1,14 @@
 #TODOS
 
 * Compare to default 1.5 startproject
-
 * Upgrade to bootstrap 3.x
+* Update templates to use to use verbatim tag
 
 * Instructions for setting up webfaction app
 * Instructions for setting up webfaction env variables
 * Instructions for setting up webfaction static
-* Setup to use sendgrid for email delivery
-
-webfaction cron
+* Instructions for setup to use sendgrid for email delivery
+* Instructions for webfaction cron
 
 webfaction environment variables:  http://community.webfaction.com/questions/13711/handling-environment-variables-with-multiple-django-instances
 
@@ -17,10 +16,20 @@ webfaction environment variables:  http://community.webfaction.com/questions/137
 !!* django-folder-storages to keep static/media in separate silos
 
 
-Fabric file for running command line alias stuff
-
-Should we setup a local apache to get the same dev/prod parity we get via foreman?  Autoenv vs foreman?
+* Fabric file or foreman or honcho for running command line alias stuff???
+* Fabric file for running remote commands on webfaction?
+* Should we setup a local apache to get the same dev/prod parity we get via foreman?  Autoenv vs foreman?
 
 Investigate using vagrant to fully automate machine setup.djan
 
 is assets/assets the best place to store static sources?
+
+Migrate to use BASE_DIR
+investigate moving to static template tag, from django.conf.urls.static import static
+
+Assets/assets vs assets/static-source???
+
+
+#Pan-quickstart todos:
+* Should jquery be moved to the vendor folder?
+* Add instructions for moving to production
