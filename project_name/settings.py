@@ -364,11 +364,6 @@ elif DJANGO_ENV == "DEV":
   
   #DEBUG TOOLBAR SETTINGS
   INTERNAL_IPS = ('127.0.0.1',)
-  # custom_show_toolbar shows toolbar for superusers
-  def custom_show_toolbar(request): return request.user.is_superuser
-  DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
-  }
 
   # LOCAL SETTINGS
   # Tolerate local settings in DEV environment 

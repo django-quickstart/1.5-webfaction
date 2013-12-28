@@ -92,7 +92,17 @@ pip install virtualenv, virtualenvwrapper, autoenv
 brew install postgresql
 ```
 
-###Creating utility aliases
+###Setting up AutoEnv###
+To get environment variables working, this guide uses [autoenv](https://github.com/kennethreitz/autoenv)
+
+I haven't been able to get autoenv working via pip, but the git installation method works for me:
+``` bash
+git clone git://github.com/kennethreitz/autoenv.git ~/.autoenv
+echo 'source ~/.autoenv/activate.sh' >> ~/.bashrc
+source ~/.bashrc
+``` 
+
+###Creating utility aliases (optional)
 Adding the following to your ```~/.bash_aliases``` file can save a lot of repetitive and verbose keystrokes.  
 ``` bash
 alias drpm ='python manage.py'
@@ -110,6 +120,7 @@ To add or edit aliases
 ``` bash
 nano ~/.bash_aliases
 ``` 
+
 
 
 # Installation #
@@ -447,9 +458,14 @@ Freezing to reequirements.txt
 pip freeze > requirements.txt
 ```
 
-Checking for later versions fo packages
+Checking for later versions of packages
 ``` bash
 pip freeze | cut -d = -f 1 | xargs -n 1 pip search | grep -B2 'LATEST:'
+``` 
+
+Auto update packages
+``` bash
+pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U
 ``` 
 
 Upgrading a package

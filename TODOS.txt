@@ -31,6 +31,7 @@ Assets/assets vs assets/static-source???
 * Should jquery be moved to the vendor folder?
 * Add instructions for moving to production
 * Should we delete the applib?
+* Update env variable section to discuss autoenv
 
 #Syncing todos:
 * Mirror template and asset changes to heroku quickstart
