@@ -1,5 +1,4 @@
-{% verbatim %}
-{% extends "base.html" %}
+{% verbatim %}{% extends "base.html" %}
 
 {% block content %}
   <h1>A new django project homepage</h1>
@@ -17,16 +16,15 @@
     <li>Add favicons to assets/assets/ico</li>
     <li>Add your custom css in assets/assets/css/base.css</li>
   </ul>
-  <p>If this page is displaying without formatting, remember to run
-    <pre>manage.py collectstatic</pre>
-    Depending on your environment you may need to run it like this:
-    <pre>
-      python manage.py collectstatic
-      python2.7 manage.py collectstatic
-      foreman run python manage.py collectstatic
-      heroku run python manage.py collectstatic
-    </pre>
-     
-  </p>
-{% endblock %}
-{% endverbatim %}
+  <p>If this page is displaying without formatting, remember to run</p>
+<pre>
+manage.py collectstatic
+</pre>
+  <p>Depending on your environment you may need to run it like this:</p>
+<pre>
+python manage.py collectstatic
+python2.7 manage.py collectstatic
+foreman run python manage.py collectstatic
+heroku run python manage.py collectstatic
+</pre>
+{% endblock %}{% endverbatim %}

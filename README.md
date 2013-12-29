@@ -1,11 +1,11 @@
 1.5-webfaction
 ==============
 
-Opinionated django project skeleton with recipe/script for rapid deployment to webfaction. Django version:1.5. Server: Apache/Mod_WSGI. Assets: Webfaction nginx. Frontend: Bootstrap 2.x. DB: Webfaction Postgres. Secrets stored in environment variable.  Uses virtualenv.  Python version 2.x
+Opinionated django project template with recipe/script for deployment to webfaction. Django version:1.5. Server: Apache/Mod_WSGI. Assets: Webfaction nginx. Frontend: Bootstrap 2.x. DB: Webfaction Postgres. Secrets stored in environment variable.  Uses virtualenv.  Python version 2.x
 
 
 
-# Django 1.4 & 1.5 project template for fast Webfaction deployment
+# Django 1.5 quickstart for  Webfaction deployment
 <!-- Uncomment this in your real project (and delete )
 # {{ project_name|title }} Django Project
 
@@ -15,12 +15,12 @@ From [Django 1.4 project template for fast webfaction deployment](https://github
 
 ## About
 
-This is a template for starting Django 1.4 projects and rapidly deploying to webfaction.  It is opinionated and configured for the things that I like and repetitively end up adding before deployment.  It works with 1.5 but has not been thoroughly tested with 1.5.   
+This is a template for starting Django 1.5 projects and deploying to webfaction.  It is opinionated and configured for the things that I like and repetitively end up adding before deployment.  It will not work with 1.4, but should work with 1.6.   
 
-While this quickstart is what I use personally, it is not promised to be complete or bug free.
+THIS IS A WORK IN PROGRESS AS OF 12/28/2013.  I AM IN THE PROCESS OF PORTING THIS OVER FROM MY HEROKU TEMPLATE.
 
 
-## Skel Template Features ##
+## Quickstart Template Features ##
 #####Logical default file tree
 - Global assets, fixtures, applib directory.
 - Project template and misc directories by default.
@@ -81,16 +81,21 @@ While this quickstart is what I use personally, it is not promised to be complet
 ## Prerequisites ##
 
 - [Webfaction account](http://www.webfaction.com/services/hosting?affiliate=blooksllc) 
-- python2 >= 2.7, pip, virtualenv, git, autoenv
+- python2 >= 2.7, pip, virtualenv, 
+- git, autoenv
+- postgres
 
 
 ### First time system config/installation stuff.
 
 ``` bash
 easy_install pip
-pip install virtualenv, virtualenvwrapper, autoenv
-brew install postgresql
+pip install virtualenv, virtualenvwrapper
 ```
+
+###Installing Postgres###
+TODO
+
 
 ###Setting up AutoEnv###
 To get environment variables working, this guide uses [autoenv](https://github.com/kennethreitz/autoenv)
@@ -135,7 +140,7 @@ There is some wait time while pip installs requirements and while running the fi
 
 
 ## Start the new project
-### First time setups steps
+### Setting up the local project environment
 Create Virtualenv
 ``` bash
 virtualenv --no-site-packages --distribute ~/ve/[project-name]
@@ -181,7 +186,7 @@ NB there are other ways to manage dev environment variables, see discussion belo
 
 Validate
 ``` bash
-foreman run python manage.py validate
+python manage.py validate
 ```
 
 Create DB
@@ -200,62 +205,62 @@ sudo -u postgres createdb -O user [project-name]
 ### Local changes script
 Syncdb and migrate
 ``` bash
-foreman run python manage.py syncdb && foreman run python manage.py migrate
+python manage.py syncdb && python manage.py migrate
 ``` 
 
 Collect static
 ``` bash
-foreman run python manage.py collectstatic --noinput
+python manage.py collectstatic --noinput
 ```
 
 Run Tests
 ``` bash
-foreman run python manage.py test
+python manage.py test
 ```
 
 Fire up local/dev server
 ``` bash
-foreman start
-#... or ...
-foreman run python manage.py runserver 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:5000
 ``` 
 
 
 
 ## Deploying
 ### Preparing for first deploy
-Create git repo
+Unlike in the heroku quickstart, we can't deploy to webfaction by just doing a git push, and webfaction doesn't by default host a git repo for each of your apps (as of this writing on 12/28/13)
+
+Thus, the process to get git setup and get each deploy up to the webfaction server takes more steps than getting it live on a heroku server.
+
+Create git repo on github, or your preferred git host (without a readme or a gitignore)
+
+Initialize an empty Git repository in your directory
 ``` bash
 git init
-... 
-Initialized empty Git repository in ...
-...
+```
+
+Add your files
+``` bash
 git add .
 git commit -m "initial commit"
-```
-
-Create heroku app
-``` bash
-heroku create [appname]
-```
-
-Add addons: sendgrid for email and postgress for database
-``` bash
-heroku addons:add sendgrid:starter
-heroku addons:add heroku-postgresql:dev
-heroku addons:add pgbackups:auto-month
-heroku addons:add newrelic:standard
-heroku addons:add scheduler:standard
-```
-
-Promote database to DATABASE_URL
-``` bash
-heroku config
-...
-HEROKU_POSTGRESQL_[color]_URL: postgress://x:y@z.com:XXXX/ABCDEFGHIJ
-...
-heroku pg:promote HEROKU_POSTGRESQL_[color]
 ``` 
+
+Link your local directory to the upstream/origin
+``` bash
+git remote add origin https://github.com/[username]/[repo name].git
+```
+
+Now push your files up to github
+``` bash
+git push -u origin master
+```
+
+Get webfaction rolling:
+
+* Setup a domain
+* Follow webfactions instructions to create a django app and database:  
+[http://docs.webfaction.com/software/django/getting-started.html](http://docs.webfaction.com/software/django/getting-started.html)
+* SSH into your webfaction shell, cd to the app, clone your repo
+* Go back to the control panel and create a static-file app symlinked to the assets folder
 
 Configure Environment Variables
 ``` bash
@@ -264,10 +269,12 @@ heroku config:set AWS_ACCESS_KEY_ID=[KEY] AWS_SECRET_ACCESS_KEY=[KEY]
 ```
 
 
+
+
 ### Regular Deploy Script
 Run All Tests
 ``` bash
-foreman run python manage.py test
+python manage.py test
 ```
 
 Freeze Pip state
@@ -283,107 +290,32 @@ git commit -m "message"
 
 Push repo to heroku
 ``` bash
-git push heroku master
+git push 
 ```
 
-Sync and migrate the remote DB
+SSH into webfaction, navigat to the app directory
+Update app code, database schema, static files
 ``` bash
-heroku run python manage.py syncdb && heroku run python manage.py migrate
-```
-
-Collect remote static
-If you haven't configured AWS correctly, this is going to break loudly
-``` bash
-heroku run python manage.py collectstatic --noinput
+apache2/bin/stop
+git pull
+python2.7 manage.py syncdb && python2.7 manage.py migrate
+python2.7 manage.py collectstatic
+apache2/bin/start
 ```
 
 Go see your site in action
-``` bash
-heroku open
-heroku logs --tail
-```
 
-That's it, you're configured and deployed.  Now go build something awesome.
+That's it, the webfaction app is now configured and deployed.  
 
 
 ## Housekeeping
-- Login to admin and set site, so emails don't come from example.com
-
-### Getting custom domain set up
-https://devcenter.heroku.com/articles/custom-domains
-https://devcenter.heroku.com/articles/avoiding-naked-domains-dns-arecords
-
-If you set up one of heroku's [adjective]-[item]-[number] app names, rename to your domain
-``` bash
-heroku apps:rename [domain]
-```
-Note that if you change this via the website you'll have to move around the git remotes and do a checkout: https://devcenter.heroku.com/articles/renaming-apps
-
-
-Add the domain
-``` bash
-heroku domains:add www.[domain].com
-```
-
-Setup CNAME for www to [appname].herokuapp.com
-Setup forwarding for naked domain to www.[domain].com
-
-Wait ~15-60 minutes
-
-Alternatively, the zerigo DNS app is another way to set this up that may be preferred.
+* Login to admin and set site, so emails don't come from example.com
 
 
 # Options, considerations, and commands worth discussing
 ## Deploying
 ### Procfile settings
-
-Dev only runserver.
-``` 
-web: python manage.py runserver "0.0.0.0:$PORT"
-``` 
-
-Standard #1: production setup gunicorn server
-``` 
-python manage.py run_gunicorn 0.0.0.0:$PORT -w 3
-``` 
-
-Standard #2: newrelic and gunicorn  **Recommended starting setup**
-https://newrelic.com/docs/python/django-on-heroku-quick-start
-``` 
-web: newrelic-admin run-program python manage.py run_gunicorn -b "0.0.0.0:$PORT" -w 3
-``` 
-
-Standard #3: newrelic, gunicorn, and celery scheduler/worker
-https://newrelic.com/docs/python/django-on-heroku-quick-start
-Note: This setup doesn't include celerybeat, instead use the heroku scheduler.  
-``` 
-web: newrelic-admin run-program python manage.py run_gunicorn -b "0.0.0.0:$PORT" -w 3
-# worker: newrelic-admin run-program python manage.py celeryd -E --loglevel=INFO
-``` 
-
-
-
-NB: The following Advanced setups use gevent to process requests asynchronously.  This can yield substantial performance improvements, but can also make debugging substantially more complicated.  They also include both a celery scheduler and worker -- there should never be more than one scheduler instance.  I have not used or confirmed that these settings work -- they are here for reference.
-
-Advanced, with newrelic, gunicorn, gevent, and celery worker
-from https://github.com/seanbrant/django-project-skeleton
-``` 
-web: newrelic-admin run-program gunicorn [project_name].wsgi -w 4 -b 0.0.0.0:$PORT -k gevent --max-requests 250
-# scheduler: newrelic-admin run-program python manage.py celeryd -B -E --loglevel=INFO
-# worker: newrelic-admin run-program python manage.py celeryd -E --loglevel=INFO
-``` 
-
-
-Advanced with newrelic, gunicorn, gevent, celery scheduler and worker
-https://github.com/rdegges/django-skel/
-``` 
-web: newrelic-admin run-program gunicorn -c gunicorn.py.ini wsgi:application
-# scheduler: python manage.py celery worker -B -E --maxtasksperchild=1000
-# worker: python manage.py celery worker -E --maxtasksperchild=1000
-``` 
-
-
-
+Not relevant on webfaction
 
 ## Working Locally
 ### Option 1: ENV Variables and vanilla manage.py - Not recommended
@@ -392,7 +324,7 @@ Set DEV environment variables, use standard django runserver command
 export DJANGO_DEBUG=True
 export DJANGO_ENV=DEV
 
-python manage.py runserver 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:5000
 ``` 
 Not preferred because: 1) less dev-prod parity 2a) environment variables set like this aren't confined to the virtual environment 2b) they aren't maintained between virtenv sessions either (unless you set them in virtenv wrapper) 3) linux environment variables set with export aren't shared between shell sessions
 
@@ -415,13 +347,15 @@ Preferred because creates closet dev-prod parity.  Automatically spools up worke
 However, sometimes you want the runserver.  Run management and other commands via foreman -- given the way settings.py switches, this is required for anything that imports settings.py.  Of further advantage, Dev and production mental models are identical.  
 ``` bash
 foreman run python manage.py [command]
-foreman run python manage.py runserver 0.0.0.0:8000
+foreman run python manage.py runserver 0.0.0.0:5000
 ``` 
 
 ### Option 3: VirtualenvWrapper PostActivate
 http://stackoverflow.com/questions/9554087/setting-an-environment-variable-in-virtualenv
 
-
+### Option 4: autoenv - Preferred when not using heroku
+TODO
+http://stackoverflow.com/questions/9554087/setting-an-environment-variable-in-virtualenv
 
 
 ## Working with VirtEnv
@@ -488,29 +422,7 @@ sudo -u postgres createdb [whatever]
 ```
 
 ### Postgres on Heroku
-Adding a db to your plan
-``` bash
-heroku addons:add heroku-postgresql:dev
-```
-
-Getting info on your dbs
-``` bash
-heroku pg:info
-``` 
-
-Promoting a db to DATABASE_URL
-``` bash
-heroku config
-...
-HEROKU_POSTGRESQL_[color]_URL: postgress://x:y@z.com:XXXX/ABCDEFGHIJ
-...
-heroku pg:promote HEROKU_POSTGRESQL_[color]_URL
-heroku config
-...
-HEROKU_POSTGRESQL_[color]_URL: postgress://x:y@z.com:XXXX/ABCDEFGHIJ
-DATABASE_URL:                  postgress://x:y@z.com:XXXX/ABCDEFGHIJ
-...
-```
+Not relevant for webfaction
 
 
 
@@ -534,20 +446,11 @@ Use a .env file and foreman
 
 
 ### On Heroku (Production and Staging/Testing)
-Seeing environment variables on heroku
-``` bash
-heroku config
-```
+Not relevant for webfaction
 
-Setting an environment variable on heroku
-``` bash
-heroku config:add DJANGO_ENV=PRODUCTION
-```
 
-Deleting an environment variable on heroku
-``` bash
-heroku config:remove DJANGO_ENV
-```
+### On Webfaction
+TODO
 
 
 ## Updating database with [South][south]
@@ -623,7 +526,7 @@ The upsides of a single requirements.txt:
 
 The downsides and risks of a single requirements.txt
 1) Extra time for deploy/cold node startup while the server downloads the additional packages 
-2) Unused packages take server space
+2) Unused packages take server disk space
 3) Risk of mis-configuration silent failure in produciton
 
 

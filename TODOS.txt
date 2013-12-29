@@ -24,14 +24,17 @@ is assets/assets the best place to store static sources?
 Migrate to use BASE_DIR
 investigate moving to static template tag, from django.conf.urls.static import static
 
-Assets/assets vs assets/static-source???
-
+??Assets/assets vs assets/static-source???
+??Add echo "using blah blah env" to env
 
 #Pan-quickstart todos:
 * Should jquery be moved to the vendor folder?
 * Add instructions for moving to production
 * Should we delete the applib?
 * Update env variable section to discuss autoenv
+* Update styling of default signup/login forms -- they appear to still be bootstrap2.x
+* Installing postgres
+* ?Is there a way to modularize these docs so I don't have to keep the heroku ones in sync manually?
 
 #Syncing todos:
 * Mirror template and asset changes to heroku quickstart
