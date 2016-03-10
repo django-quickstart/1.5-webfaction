@@ -141,11 +141,13 @@ There is some wait time while pip installs requirements and while running the fi
 
 ## Start the new project
 ### Setting up the local project environment
-Create Virtualenv
+Create Virtualenv, tell it to not use the system packages
 ``` bash
 virtualenv --no-site-packages --distribute ~/ve/[project-name]
+touch ~/ve/[project-name/lib/[python-version]/sitecustomize.py
 source ~/ve/[project-name]/bin/activate
 ``` 
+Alternately, https://community.webfaction.com/questions/4253/simple-virtualenv-usage-with-django gives the method of setting up virtualenvwrapper (which I prefer not to use)
 
 Install Django
 ``` bash
